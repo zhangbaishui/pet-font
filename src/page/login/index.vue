@@ -95,6 +95,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('登录成功!');
+            sessionStorage.setItem("user",this.ruleForm.user)
           } else {
             console.log('error submit!!');
             return false;
