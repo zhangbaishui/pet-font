@@ -2,7 +2,28 @@
   <el-container :style="'height:'+fullHeight+'px;'">
     <el-header>
       <div class="header_logo">
-        <el-image :src="header_logo_img" style="width: 75px;height: 60px; "/>
+<!--        <el-image :src="header_logo_img" style="width: 75px;height: 60px; "/>-->
+        欢迎 来到 泉哥 vue项目
+      </div>
+      <div>
+        <el-menu
+          :default-active="activeIndex2"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#283647"
+          text-color="#fff"
+          active-text-color="#ffd04b">
+          <el-menu-item index="1">处理中心</el-menu-item>
+          <el-menu-item index="3" disabled>消息中心</el-menu-item>
+          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">个人信息</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+            <el-menu-item index="2-3">退出登录</el-menu-item>
+          </el-submenu>
+        </el-menu>
       </div>
       <div class="zq_header_input">
         <el-input   placeholder=”请输入内容” prefix-icon="el-icon-search">
@@ -10,9 +31,49 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside width=”80px”>Aside</el-aside>
+      <el-aside width="201px">
+        <div>
+          <el-col :span="12">
+            <el-menu
+              default-active="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+              background-color="rgb(242, 242, 242)">
+              <el-menu-item index="2" @click="gotodashboard">
+                <i class="el-icon-s-home"></i>
+                <span slot="title" >首页</span>
+              </el-menu-item>
+              <el-submenu index="1">
+                <template slot="title">
+                  <i class="el-icon-s-platform"></i>
+                  <span>导航一</span>
+                </template>
+                <el-menu-item-group>
+                  <template slot="title">分组一</template>
+                  <el-menu-item index="1-1" @click="usermanage">选项1</el-menu-item>
+                  <el-menu-item index="1-2">选项2</el-menu-item>
+                </el-menu-item-group>
+                <el-menu-item-group title="分组2">
+                  <el-menu-item index="1-3">选项3</el-menu-item>
+                </el-menu-item-group>
+                <el-submenu index="1-4">
+                  <template slot="title">选项4</template>
+                  <el-menu-item index="1-4-1">选项1</el-menu-item>
+                </el-submenu>
+              </el-submenu>
+            </el-menu>
+          </el-col>
+        </div>
+      </el-aside>
       <el-main>
-        傻逼卢本伟准备就绪
+<!--        <div class="zq-container-main">-->
+<!--      </div>-->
+        <el-card style="background-color: rgb(242, 242, 242);">
+          <template>
+            <router-view/>
+          </template>
+        </el-card>
       </el-main>
     </el-container>
   </el-container>
@@ -33,6 +94,8 @@ export default {
   },
   data() {
     return {
+      activeIndex2:'1',
+      isCollapse: false,
       header_logo_img: logo,
       fullHeight: document.documentElement.clientHeight
     }
@@ -54,6 +117,22 @@ export default {
     this.get_bodyHeight()
   },
   methods : {
+    gotodashboard(){
+      this.$router.push({path:'dashboard'})
+    },
+    usermanage(){
+      this.$router.push({path:'user'})
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
     get_bodyHeight() {//动态获取浏览器高度
       const that = this
       window.onresize = () => {
@@ -73,7 +152,7 @@ export default {
 </script>
 <style  scoped>
   .el-header{
-    background-color: #545E6A;
+    background-color: #283647;
     color: #F6F6F6;
     line-height: 60px;
     display: flex;
@@ -84,28 +163,36 @@ export default {
     height: 60px;
   }
   .el-aside {
-    background-color: #3D464F;
-    color: #828692;
+    background-color:rgb(242, 242, 242);
     width: 8%;
-    text-align: center;
-    line-height: 600px;
   }
   .el-main {
-    background-color: #283647;
+    /*background-color: #283647;*/
+    background-color: #FFFFFF;
     color: #E6E8EA;
-    text-align: center;
-    line-height: 600px;
+    padding:13px;
   }
   .header_logo {
     flex: 3;
     display: flex;
     justify-content: left;
-    margin-left: 60px;
   }
 
   .zq_header_input {
     width: 200px;
   }
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
+  .el-menu {
+    border-right: 0;
+    border-bottom: 0;
+  }
 </style>
 <style>
+  .zq-container-main{
+    margin: 2px;
+    background: #fff;
+  }
 </style>

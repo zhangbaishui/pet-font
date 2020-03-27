@@ -90,12 +90,17 @@
         }
       };
     },
+    created(){
+      this.shuaxin
+    },
     methods: {
+      shuaxin(){location.reload()},
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('登录成功!');
             sessionStorage.setItem("user",this.ruleForm.user)
+           this.$router.push({path:'/index'})
           } else {
             console.log('error submit!!');
             return false;
