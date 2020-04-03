@@ -69,11 +69,9 @@
       <el-main>
 <!--        <div class="zq-container-main">-->
 <!--      </div>-->
-        <el-card style="background-color: rgb(242, 242, 242);">
           <template>
             <router-view/>
           </template>
-        </el-card>
       </el-main>
     </el-container>
   </el-container>

@@ -1,24 +1,64 @@
 <template>
+  <el-card style="background-color: rgb(242, 242, 242);">
   <div>
-
     <el-row :gutter="25" style="margin-top: 0">
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card-1"></el-card>
+        <el-card class="zq-card1-1"></el-card>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple">
-        <el-card class="zq-card-2"></el-card>
+        <el-card class="zq-card1-2"></el-card>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card-3"></el-card>
+        <el-card class="zq-card1-3"></el-card>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card-4"></el-card>
+        <el-card class="zq-card1-4"></el-card>
       </div></el-col>
       <el-col :span="4"><div class="grid-content bg-purple ">
+        <el-card class="zq-card1-5">
+        <div class="wrap">
+          <div class="photo">
+          <a href=" ">
+            <el-image :src="pet1"  class="zq-img" style="border-radius: 3px"/>
+            <span style="color: rgb(102, 177, 255);">宠物指南</span>
+          </a>
+          </div>
+        </div>
+        </el-card>
+      </div></el-col>
+    </el-row>
 
-          <el-image :src="pet1"  class="zq-img">
-            <p style="color: #eeeeee; position: absolute">傻逼</p>
-          </el-image>
+
+    <el-row :gutter="15">
+      <el-col :span="6"><div class="grid-content bg-purple">
+        <el-card class="zq-card2-1">
+          <PieChart></PieChart>
+        </el-card>
+      </div></el-col>
+      <el-col :span="15"><div class="grid-content bg-purple-light">
+        <el-card class="zq-card2-2">
+        </el-card>
+      </div></el-col>
+      <el-col :span="3"><div class="grid-content bg-purple">
+        <el-card class="zq-card2-3">
+        </el-card>
+        <el-card class="zq-card2-4">
+        </el-card>
+      </div></el-col>
+    </el-row>
+
+    <el-row :gutter="15">
+      <el-col :span="6"><div class="grid-content bg-purple">
+        <el-card class="zq-card3-1">
+        </el-card>
+      </div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple-light">
+        <el-card class="zq-card3-2">
+        </el-card>
+      </div></el-col>
+      <el-col :span="10"><div class="grid-content bg-purple">
+        <el-card class="zq-card3-3">
+        </el-card>
       </div></el-col>
     </el-row>
 
@@ -89,11 +129,14 @@
     <div id="shabi" :style="{width: '300px', height: '300px'}"></div>
 
   </div>
+  </el-card>
 </template>
 <script>
   import pet1 from "@/assets/img/pet1.png"
+  import PieChart from "../../components/Charts/PieChart";
   export default {
     name: 'dashboard',
+    components: {PieChart},
     data() {
       return {
         currentDate: new Date(),
@@ -120,6 +163,9 @@
   }
 </script>
 <style scoped>
+  /deep/ .el-card__body {
+    padding: 0;
+  }
   .time {
     font-size: 13px;
     color: #999;
@@ -142,11 +188,11 @@
 
   .zq-img{
     width: 100%;
-    height: 100%;
+    height: 100px;
     display: block;
   }
   .zq-img-background{
-    background-image: url("../../assets/img/pet1.png") ;
+    background: url("../../assets/img/pet1.png") ;
     background-size: contain;
   }
 
@@ -160,26 +206,75 @@
     clear: both
   }
 
-  .zq-card-1 {
+  .zq-card1-1 {
     background-color: rgb(102, 177, 255);
-    height: 100px;
+    height: 90px;
   }
-  .zq-card-2 {
+  .zq-card1-2 {
     background-color:   #9B5EEA;
-    height: 100px;
+    height: 90px;
   }
-  .zq-card-3 {
+  .zq-card1-3 {
     background-color: #67C23A;
-    height: 100px;
+    height: 90px;
   }
-  .zq-card-4 {
+  .zq-card1-4 {
     background-color: #4DDEDA;
-    height: 100px;
+    height: 90px;
   }
-  .zq-card-5 {
-    background-color: #42b983;
-    height: 100px;
+  .zq-card1-5 {
+    height: 90px;
   }
+  .zq-card2-1 {
+    height: 340px;
+  }
+  .zq-card2-2 {
+    height: 340px;
+  }
+  .zq-card2-3 {
+    height: 155px;
+  }
+  .zq-card2-4 {
+     margin-top: 28px;
+     height: 155px;
+   }
+
+  .zq-card3-1 {
+    height: 330px;
+  }
+  .zq-card3-2 {
+    height: 330px;
+  }
+  .zq-card3-3 {
+    height: 330px;
+  }
+  .wrap{
+    width: 100%;
+    height: 100px;
+    position:relative;
+  }
+  .photo a{
+    position:absolute;display:block;
+  }
+  .photo a:hover{
+    border:1px solid #FFFFFF;
+  }
+  .photo span{
+    display:block;
+    position:absolute;
+    bottom:0;
+    opacity:0.8;
+    cursor:hand;
+    text-align: center;
+    padding-left: 39%;
+    padding-bottom: 35px;
+  }
+  .photo a:hover span{
+    text-decoration:underline
+  }
+
+
+
   .el-row {
     margin-bottom: 20px;
 
@@ -213,6 +308,7 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+
   }
 
 </style>
