@@ -35,32 +35,24 @@
         <div>
           <el-col :span="12">
             <el-menu
-              default-active="2"
+              :router="true"
+              :default-openeds="['2']"
+              default-active="dashboard"
               class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose"
               background-color="rgb(242, 242, 242)">
-              <el-menu-item index="2" @click="gotodashboard">
+              <el-menu-item index="dashboard">
                 <i class="el-icon-s-home"></i>
                 <span slot="title" >首页</span>
               </el-menu-item>
-              <el-submenu index="1">
+              <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-s-platform"></i>
-                  <span>导航一</span>
+                  <span>宠物管理</span>
                 </template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="1-1" @click="usermanage">选项1</el-menu-item>
-                  <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
+                  <el-menu-item index="user">宠物信息</el-menu-item>
+                  <el-menu-item index="2-3">选项3</el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>
@@ -98,12 +90,15 @@ export default {
       fullHeight: document.documentElement.clientHeight
     }
   },
+  created(){
+
+  },
   watch: {
     fullHeight (val) {//监控浏览器高度变化
       if(!this.timer) {
-        this.fullHeight = val
-        this.timer = true
-        let that = this
+        this.fullHeight = val;
+        this.timer = true;
+        let that = this;
         setTimeout(function (){
           that.timer = false
         },400)
@@ -115,12 +110,6 @@ export default {
     this.get_bodyHeight()
   },
   methods : {
-    gotodashboard(){
-      this.$router.push({path:'dashboard'})
-    },
-    usermanage(){
-      this.$router.push({path:'user'})
-    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },

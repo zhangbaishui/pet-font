@@ -3,19 +3,27 @@
   <div>
     <el-row :gutter="25" style="margin-top: 0">
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card1-1"></el-card>
+        <transition name="el-fade-in-linear">
+        <el-card class="zq-card1-1 animated" v-show="show1" ></el-card>
+        </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple">
-        <el-card class="zq-card1-2"></el-card>
+        <transition name="el-fade-in-linear">
+        <el-card class="zq-card1-2" v-show="show1"></el-card>
+        </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card1-3"></el-card>
+        <transition name="el-fade-in-linear">
+        <el-card class="zq-card1-3" v-show="show1"></el-card>
+        </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card1-4"></el-card>
+        <transition name="el-fade-in-linear">
+        <el-card class="zq-card1-4" v-show="show1"></el-card>
+        </transition>
       </div></el-col>
       <el-col :span="4"><div class="grid-content bg-purple ">
-        <el-card class="zq-card1-5">
+        <el-card class="zq-card1-5" >
         <div class="wrap">
           <div class="photo">
           <a href=" ">
@@ -32,11 +40,12 @@
     <el-row :gutter="15">
       <el-col :span="6"><div class="grid-content bg-purple">
         <el-card class="zq-card2-1">
-          <PieChart></PieChart>
+          <PieChart class="zq-echart-style1"></PieChart>
         </el-card>
       </div></el-col>
       <el-col :span="15"><div class="grid-content bg-purple-light">
         <el-card class="zq-card2-2">
+          <zq-calendar/>
         </el-card>
       </div></el-col>
       <el-col :span="3"><div class="grid-content bg-purple">
@@ -58,6 +67,7 @@
       </div></el-col>
       <el-col :span="10"><div class="grid-content bg-purple">
         <el-card class="zq-card3-3">
+          <el-button @click="show1 = !show1">傻逼</el-button>
         </el-card>
       </div></el-col>
     </el-row>
@@ -134,11 +144,13 @@
 <script>
   import pet1 from "@/assets/img/pet1.png"
   import PieChart from "../../components/Charts/PieChart";
+  import ZqCalendar from "../../components/commons/zq-calendar";
   export default {
     name: 'dashboard',
-    components: {PieChart},
+    components: {ZqCalendar, PieChart},
     data() {
       return {
+        show1:true,
         currentDate: new Date(),
         pet1: pet1,
       };
@@ -309,6 +321,14 @@
     padding: 10px 0;
     background-color: #f9fafc;
 
+  }
+  /*动画样式
+ */
+  .animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
   }
 
 </style>

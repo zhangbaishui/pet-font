@@ -98,9 +98,8 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('登录成功!');
             sessionStorage.setItem("user",this.ruleForm.user)
-           this.$router.push({path:'/index'})
+           this.$router.push({path:'/dashboard'})
           } else {
             console.log('error submit!!');
             return false;
