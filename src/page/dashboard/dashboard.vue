@@ -4,29 +4,57 @@
     <el-row :gutter="25" style="margin-top: 0">
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
-        <el-card class="zq-card1-1 animated" v-show="show1" ></el-card>
+        <el-card class="zq-card1-1 animated" v-show="show1" >
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <el-row type="flex"justify="center">
+            <el-col :span="6"><div>
+              <div class="zq-text-style"  ><span> 样板数据</span></div>
+            </div></el-col>
+          </el-row>
+        </el-card>
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple">
         <transition name="el-fade-in-linear">
-        <el-card class="zq-card1-2" v-show="show1"></el-card>
+        <el-card class="zq-card1-2" v-show="show1">
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <el-row type="flex"justify="center">
+            <el-col :span="6"><div>
+              <div class="zq-text-style"  ><span> 样板数据</span></div>
+            </div></el-col>
+          </el-row>
+        </el-card>
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
-        <el-card class="zq-card1-3" v-show="show1"></el-card>
+        <el-card class="zq-card1-3" v-show="show1">
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <el-row type="flex"justify="center">
+            <el-col :span="6"><div>
+              <div class="zq-text-style"  ><span> 样板数据</span></div>
+            </div></el-col>
+          </el-row>
+        </el-card>
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
-        <el-card class="zq-card1-4" v-show="show1"></el-card>
+        <el-card class="zq-card1-4" v-show="show1">
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <el-row type="flex"justify="center">
+            <el-col :span="6"><div>
+              <div class="zq-text-style"  ><span> 样板数据</span></div>
+            </div></el-col>
+          </el-row>
+        </el-card>
         </transition>
       </div></el-col>
       <el-col :span="4"><div class="grid-content bg-purple ">
         <el-card class="zq-card1-5" >
         <div class="wrap">
           <div class="photo">
-          <a href=" ">
+          <a href="https://baijiahao.baidu.com/s?id=1650802483300966685&wfr=spider&for=pc">
             <el-image :src="pet1"  class="zq-img" style="border-radius: 3px"/>
             <span style="color: rgb(102, 177, 255);">宠物指南</span>
           </a>
@@ -35,23 +63,23 @@
         </el-card>
       </div></el-col>
     </el-row>
-
-
     <el-row :gutter="15">
       <el-col :span="6"><div class="grid-content bg-purple">
         <el-card class="zq-card2-1">
-          <PieChart class="zq-echart-style1"></PieChart>
+          <PieChart/>
         </el-card>
       </div></el-col>
       <el-col :span="15"><div class="grid-content bg-purple-light">
-        <el-card class="zq-card2-2">
-          <zq-calendar/>
+        <el-card class="zq-card2-2" style="padding: 10px">
+          <ChinaChart />
         </el-card>
       </div></el-col>
       <el-col :span="3"><div class="grid-content bg-purple">
         <el-card class="zq-card2-3">
+          <el-image :src="pet2"  style="border-radius: 3px; width: 100%;height: 100%"/>
         </el-card>
         <el-card class="zq-card2-4">
+          <el-image :src="pet3"  style="border-radius: 3px; width: 100%;height: 100%"/>
         </el-card>
       </div></el-col>
     </el-row>
@@ -59,82 +87,22 @@
     <el-row :gutter="15">
       <el-col :span="6"><div class="grid-content bg-purple">
         <el-card class="zq-card3-1">
+          <chart31/>
         </el-card>
       </div></el-col>
       <el-col :span="8"><div class="grid-content bg-purple-light">
         <el-card class="zq-card3-2">
+          <chart32/>
         </el-card>
       </div></el-col>
       <el-col :span="10"><div class="grid-content bg-purple">
         <el-card class="zq-card3-3">
+          <chart33/>
           <el-button @click="show1 = !show1">傻逼</el-button>
         </el-card>
       </div></el-col>
     </el-row>
 
-
-    <el-row type="flex" :gutter="20" justify="center">
-      <el-col :span="5">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                 class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="5">
-        <div class="grid-content bg-purple-light">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                 class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="5">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                 class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="5">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                 class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">操作按钮</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
 
     <div id="shabi" :style="{width: '300px', height: '300px'}"></div>
 
@@ -142,17 +110,25 @@
   </el-card>
 </template>
 <script>
-  import pet1 from "@/assets/img/pet1.png"
+  import pet1 from "@/assets/img/pet1.png";
+  import pet2 from "@/assets/img/zq-mao1.png"
+  import pet3 from "@/assets/img/zq-mao2.png"
   import PieChart from "../../components/Charts/PieChart";
+  import ChinaChart from  "../../components/Charts/chinaChart";
   import ZqCalendar from "../../components/commons/zq-calendar";
+  import chart31 from  "../../components/Charts/chart3-1";
+  import chart32 from  "../../components/Charts/chart3-2";
+  import chart33 from  "../../components/Charts/chart3-3";
   export default {
     name: 'dashboard',
-    components: {ZqCalendar, PieChart},
+    components: {ZqCalendar, PieChart,ChinaChart,chart31,chart32,chart33},
     data() {
       return {
         show1:true,
         currentDate: new Date(),
         pet1: pet1,
+        pet2: pet2,
+        pet3: pet3,
       };
     },
     mounted() {
@@ -198,6 +174,13 @@
     display: block;
   }
 
+  .zq-text-style{
+    color: #ffffff;
+    text-align: center;
+    margin-top: 7px;
+    font-size: 18px;
+  }
+
   .zq-img{
     width: 100%;
     height: 100px;
@@ -241,7 +224,7 @@
     height: 340px;
   }
   .zq-card2-2 {
-    height: 340px;
+    height: 320px;
   }
   .zq-card2-3 {
     height: 155px;

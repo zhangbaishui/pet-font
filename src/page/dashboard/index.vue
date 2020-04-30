@@ -49,9 +49,9 @@
               <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-s-platform"></i>
-                  <span>宠物管理</span>
+                  <span>样板管理</span>
                 </template>
-                  <el-menu-item index="user">宠物信息</el-menu-item>
+                  <el-menu-item index="user">样板信息</el-menu-item>
                   <el-menu-item index="2-3">选项3</el-menu-item>
               </el-submenu>
             </el-menu>

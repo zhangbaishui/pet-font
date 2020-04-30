@@ -1,5 +1,5 @@
 <template>
-  <div id="aa" style="width: 100%;height: 330px"></div>
+  <div id="PieChart" style="width: 100%;height: 330px"></div>
 </template>
 
 <script>
@@ -10,7 +10,7 @@
       return {};
     },
     mounted() {
-      var myChart = this.$echarts.init(document.getElementById('aa'));
+      var myChart = this.$echarts.init(document.getElementById('PieChart'));
      var option = {
         title: {
           subtext: '系统注册宠物类型',
