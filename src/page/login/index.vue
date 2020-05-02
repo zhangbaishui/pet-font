@@ -8,7 +8,7 @@
         </div>
 
         <el-form-item prop="user">
-          <el-input placeholder="用户名" v-model="ruleForm.user"></el-input>
+          <el-input placeholder="用户名" v-model="ruleForm.user" @blur=""></el-input>
         </el-form-item>
 
         <el-form-item prop="pass">
@@ -40,6 +40,23 @@
     components: {validCode},
     data() {
       var validateUesr = (rule, value, callback) => {
+         //
+         //     this.$http.get('http://localhost:10012/api/pet/user/nameIsEixt',{
+         //         params:{
+         //             name: value
+         //         }
+         //     }).then((res)=>{
+         //         this.nameIsExit = res.data;
+         //     }).catch((res)=>{
+         //         this.$message.error("系统异常")
+         //     });
+         // console.log(this.nameIsExit)
+         //  if (this.nameIsExit === false){
+         //      console.log()
+         //      return  callback(new Error('该用户不存在'));
+         //  }else {
+         //      callback();
+         //  }
         if (!value) {
           return callback(new Error('用户名不能为空'));
         }
@@ -67,6 +84,7 @@
         }
       };
       return {
+          nameIsExit:true,
         isInVcode:true,
         pass: '',
         validCode: '',
@@ -96,6 +114,7 @@
     methods: {
       shuaxin(){location.reload()},
       submitForm(formName) {
+         console.log(this.ruleForm);
         this.$refs[formName].validate((valid) => {
           if (valid) {
             sessionStorage.setItem("user",this.ruleForm.user)

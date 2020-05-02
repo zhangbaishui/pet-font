@@ -13,9 +13,6 @@
     mounted() {
       var myChart = this.$echarts.init(document.getElementById('chart3-3'));
       this.lineOption1 = {
-        title: {
-          text: '堆叠区域图'
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {

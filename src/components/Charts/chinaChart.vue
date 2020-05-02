@@ -89,7 +89,7 @@
       this.lineOption1 = {
         backgroundColor: "#404a59",
         title: {
-          text: '分公司区域分布',
+          text: '全国线下宠物店铺分布 ',
           left: 'center',
           textStyle: {
             color: '#fff'

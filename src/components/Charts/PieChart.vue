@@ -23,7 +23,7 @@
         legend: {
           x: 'center',
           y: 'bottom',
-          data: ['美妆饰品', '百货食品', '游戏话费', '生活服务', '户外运动', '其他']
+          data: ['宠物狗', '宠物猫', '鸟类', '爬行类', '马匹','鱼类', '其他']
         },
 
         calculable: true,
@@ -55,26 +55,30 @@
           data: [
             {
               value: 35,
-              name: '美妆饰品'
+              name: '宠物狗'
             },
             {
               value: 25,
-              name: '百货食品'
+              name: '宠物猫'
+            },
+            {
+              value: 13,
+              name: '鸟类'
+            },
+            {
+              value: 18,
+              name: '爬行类'
             },
             {
               value: 5,
-              name: '游戏话费'
+              name: '马匹'
             },
+              {
+                  value: 20,
+                  name: '鱼类'
+              },
             {
               value: 15,
-              name: '生活服务'
-            },
-            {
-              value: 20,
-              name: '户外运动'
-            },
-            {
-              value: 10,
               name: '其他'
             }]
         },]

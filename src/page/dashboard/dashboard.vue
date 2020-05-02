@@ -5,10 +5,10 @@
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
         <el-card class="zq-card1-1 animated" v-show="show1" >
-          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>宠物总量</span></div>
           <el-row type="flex"justify="center">
             <el-col :span="6"><div>
-              <div class="zq-text-style"  ><span> 样板数据</span></div>
+              <div class="zq-text-style"  ><span> 32260只</span></div>
             </div></el-col>
           </el-row>
         </el-card>
@@ -17,10 +17,10 @@
       <el-col :span="5"><div class="grid-content bg-purple">
         <transition name="el-fade-in-linear">
         <el-card class="zq-card1-2" v-show="show1">
-          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>线下店铺</span></div>
           <el-row type="flex"justify="center">
             <el-col :span="6"><div>
-              <div class="zq-text-style"  ><span> 样板数据</span></div>
+              <div class="zq-text-style"  ><span> 360家</span></div>
             </div></el-col>
           </el-row>
         </el-card>
@@ -29,10 +29,10 @@
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
         <el-card class="zq-card1-3" v-show="show1">
-          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>注册人数</span></div>
           <el-row type="flex"justify="center">
             <el-col :span="6"><div>
-              <div class="zq-text-style"  ><span> 样板数据</span></div>
+              <div class="zq-text-style"  ><span> 14205人</span></div>
             </div></el-col>
           </el-row>
         </el-card>
@@ -41,10 +41,10 @@
       <el-col :span="5"><div class="grid-content bg-purple-light">
         <transition name="el-fade-in-linear">
         <el-card class="zq-card1-4" v-show="show1">
-          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>样板数据</span></div>
+          <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>在线人数</span></div>
           <el-row type="flex"justify="center">
             <el-col :span="6"><div>
-              <div class="zq-text-style"  ><span> 样板数据</span></div>
+              <div class="zq-text-style"  ><span> 560人</span></div>
             </div></el-col>
           </el-row>
         </el-card>
@@ -104,8 +104,6 @@
     </el-row>
 
 
-    <div id="shabi" :style="{width: '300px', height: '300px'}"></div>
-
   </div>
   </el-card>
 </template>
@@ -124,30 +122,20 @@
     components: {ZqCalendar, PieChart,ChinaChart,chart31,chart32,chart33},
     data() {
       return {
-        show1:true,
+        show1:false,
         currentDate: new Date(),
         pet1: pet1,
         pet2: pet2,
         pet3: pet3,
       };
     },
-    mounted() {
-      var myChart = this.$echarts.init(document.getElementById('shabi'));
-      myChart.setOption({
-        title: {text: '在Vue中使用echarts'},
-        tooltip: {},
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
-        }]
-      })
+      mounted() {
+        /*quan zhang: 延迟执行  */
+          setTimeout(()=>{   //设置延迟执行
+             this.show1 = true;
+          },800)
+      }
 
-    }
   }
 </script>
 <style scoped>
@@ -284,15 +272,15 @@
   }
 
   .bg-purple-dark {
-    background: #99a9bf;
+    /*background: #99a9bf;*/
   }
 
   .bg-purple {
-    background: #d3dce6;
+    /*background: #d3dce6;*/
   }
 
   .bg-purple-light {
-    background: #e5e9f2;
+    /*background: #e5e9f2;*/
   }
 
   .grid-content {
@@ -302,7 +290,7 @@
 
   .row-bg {
     padding: 10px 0;
-    background-color: #f9fafc;
+    /*background-color: #f9fafc;*/
 
   }
   /*动画样式
