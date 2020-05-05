@@ -98,7 +98,6 @@
       <el-col :span="10"><div class="grid-content bg-purple">
         <el-card class="zq-card3-3">
           <chart33/>
-          <el-button @click="show1 = !show1">傻逼</el-button>
         </el-card>
       </div></el-col>
     </el-row>

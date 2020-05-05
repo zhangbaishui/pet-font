@@ -21,7 +21,7 @@
             <template slot="title">个人信息</template>
             <el-menu-item index="2-1">选项1</el-menu-item>
             <el-menu-item index="2-2">选项2</el-menu-item>
-            <el-menu-item index="2-3">退出登录</el-menu-item>
+            <el-menu-item index="2-3" @click="tuichu">退出登录</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -49,10 +49,10 @@
               <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-s-platform"></i>
-                  <span>样板管理</span>
+                  <span>个人信息管理</span>
                 </template>
-                  <el-menu-item index="user">样板信息</el-menu-item>
-                  <el-menu-item index="2-3">选项3</el-menu-item>
+                  <el-menu-item index="user">个人信息</el-menu-item>
+                  <el-menu-item index="pet">宠物管理</el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>
@@ -110,6 +110,10 @@ export default {
     this.get_bodyHeight()
   },
   methods : {
+      tuichu(){
+          this.$message.success("成功退出登录");
+          this.$router.push({path:'/login'})
+      },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },

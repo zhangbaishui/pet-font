@@ -37,6 +37,11 @@ export default new Router(
             path: '/pet',
             component: () => import("@/page/pet/petmanage"),
             name: '宠物管理'
+          },
+          {
+            path: '/petDetial',
+            component: () => import("@/page/pet/petdetial"),
+            name: '宠物详情'
           }
         ]
       }

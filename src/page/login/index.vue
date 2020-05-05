@@ -40,23 +40,6 @@
     components: {validCode},
     data() {
       var validateUesr = (rule, value, callback) => {
-         //
-         //     this.$http.get('http://localhost:10012/api/pet/user/nameIsEixt',{
-         //         params:{
-         //             name: value
-         //         }
-         //     }).then((res)=>{
-         //         this.nameIsExit = res.data;
-         //     }).catch((res)=>{
-         //         this.$message.error("系统异常")
-         //     });
-         // console.log(this.nameIsExit)
-         //  if (this.nameIsExit === false){
-         //      console.log()
-         //      return  callback(new Error('该用户不存在'));
-         //  }else {
-         //      callback();
-         //  }
         if (!value) {
           return callback(new Error('用户名不能为空'));
         }
@@ -84,6 +67,7 @@
         }
       };
       return {
+          bb:true,
           nameIsExit:true,
         isInVcode:true,
         pass: '',
@@ -108,23 +92,44 @@
         }
       };
     },
-    created(){
-      this.shuaxin
-    },
     methods: {
       shuaxin(){location.reload()},
       submitForm(formName) {
+
          console.log(this.ruleForm);
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            sessionStorage.setItem("user",this.ruleForm.user)
-           this.$router.push({path:'/dashboard'})
+                 this.nameIsExitMethod();
+
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+        nameIsExitMethod(){
+            this.$http.get('http://localhost:10012/api/pet/user/namePassIsTrue',{
+                params:{
+                    name: this.ruleForm.user,
+                    pass: this.ruleForm.pass
+                }
+            },false).then((res)=>{
+                this.nameIsExit = res.data.ist;
+                console.log("dadda"+this.nameIsExit)
+                if (this.nameIsExit === true){
+                    this.$message.success("登录成功")
+                    sessionStorage.setItem("user",this.ruleForm.user);
+                    this.$router.push({path:'/dashboard'})
+                }
+                else {
+                    this.$message.error("账号密码错误，请重新登录")
+                }
+            }).catch((res)=>{
+                this.$message.error("系统异常")
+            });
+        }
+
+
     }
   }
 </script>
