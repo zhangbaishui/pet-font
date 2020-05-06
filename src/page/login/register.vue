@@ -1,0 +1,206 @@
+<!--Quan.Zhang: 注册页面-->
+<template>
+  <div>
+    <!--编辑宠物信息-->
+    <el-dialog title="用户注册" :visible.sync="dialogFormVisible" top="5vh">
+      <el-form :model="form" :rules="rules" ref="ruleForm">
+        <el-form-item label="用户名称" :label-width="formLabelWidth" prop="name">
+          <el-input style="width: 50%" v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="用户密码" :label-width="formLabelWidth" prop="pass">
+          <el-input type="password" style="width: 50%" v-model="form.pass" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="再次确认密码" :label-width="formLabelWidth" prop="twopass">
+          <el-input type="password" style="width: 50%" v-model="twopass" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入手机号" :label-width="formLabelWidth" prop="iphone">
+          <el-input style="width: 50%" v-model="form.iphone" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请选择性别" :label-width="formLabelWidth" prop="gender">
+          <el-radio-group v-model="form.gender">
+            <el-radio label="男"></el-radio>
+            <el-radio label="女"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="请输入年龄" :label-width="formLabelWidth" prop="age">
+          <el-input style="width: 50%" v-model="form.age" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入邮箱" :label-width="formLabelWidth" prop="mail">
+          <el-input style="width: 50%" v-model="form.mail" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="选择上传头像" :label-width="formLabelWidth">
+          <el-upload
+            style="width: 50%"
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="form.image"
+            list-type="picture">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+
+        <el-form-item style="margin-left: 70%">
+          <el-button @click="resetForm('ruleForm')">取 消</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">确 定
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+  </div>
+</template>
+<script>
+  export default {
+    name: 'register',
+    props: {
+      show: {
+        type: Boolean,
+        default: false
+      },
+    },
+    components: {},
+    watch: {
+      show(val) {
+        this.dialogFormVisible = val;
+      },
+      dialogFormVisible(val) {
+        this.$emit('showRegis', val);
+      }
+    },
+    data() {
+
+      let percent = /^(?:[1-9]?\d|100)$/;
+      let isPercent = (rule, value, callback) => {
+        if (!percent.test(value)) {
+          return callback(new Error('请输入0-100的整数'))
+        } else {
+          callback()
+        }
+      };
+      let ispassTrue = (rule, value, callback) => {
+        if (this.twopass !== this.form.pass) {
+          return callback(new Error('两次密码不一致'))
+        } else {
+          callback()
+        }
+      };
+      let mail = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+      let isMail = (rule, value, callback) => {
+        if (!mail.test(value)) {
+          return callback(new Error('邮箱格式有误'))
+        } else {
+          callback()
+        }
+      };
+      let phone = /^1[3|4|5|8][0-9]\d{4,8}$/;
+      let isPhone = (rule, value, callback) => {
+        if (!phone.test(value)) {
+          return callback(new Error('手机号格式不正确'))
+        } else {
+          callback()
+        }
+      };
+      return {
+        dialogFormVisible: false,
+        formLabelWidth: '120px',
+        twopass:'',
+        form: {
+          name: '',
+          pass: '',
+          gender: '',
+          iphone: '',
+          mail: '',
+          age: '',
+          image: [],
+        },
+        rules: {
+          name: [
+            {required: true, message: '请输入名字', trigger: 'blur'},
+          ],
+          pass: [
+            {required: true, message: '请输入密码', trigger: 'blur'},
+          ],
+          iphone: [
+            {required: true, message: '请输入手机号', trigger: 'blur'},
+            {validator: isPhone}
+          ],
+          twopass: [
+            {validator: ispassTrue}
+          ],
+          gender: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+            ],
+          age: [
+            {required: true, message: '请输入年龄', trigger: 'blur'},
+            {validator: isPercent}
+          ],
+          mail: [
+            {required: true, message: '请输入邮箱', trigger: 'blur'},
+            {validator: isMail}
+          ],
+
+
+        }
+      };
+    },
+    methods: {
+      handleRemove(file,fileList) {
+        console.log(file,fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.dialogFormVisible = false;
+          } else {
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+        this.dialogFormVisible = false;
+        this.$message("已取消编辑")
+      }
+
+    }
+  }
+</script>
+
+<style scoped>
+  .demo-image__lazy {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  .el-col {
+    border-radius: 4px;
+  }
+
+  .bg-purple-dark {
+    /*background: #99a9bf;*/
+  }
+
+  .bg-purple {
+    /*background: #d3dce6;*/
+  }
+
+  .bg-purple-light {
+    /*background: #e5e9f2;*/
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  .row-bg {
+    padding: 10px 0;
+    /*background-color: #f9fafc;*/
+  }
+</style>
+

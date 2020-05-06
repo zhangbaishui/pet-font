@@ -49,7 +49,7 @@
                   <el-form-item label="该宠物描述" :label-width="formLabelWidth" prop="desc">
                     <el-input style="width: 50%" type="textarea" v-model="form.desc"></el-input>
                   </el-form-item>
-                  <el-form-item label="该宠物描述" :label-width="formLabelWidth" prop="image">
+                  <el-form-item label="该宠物照片" :label-width="formLabelWidth" prop="image">
                     <el-upload
                       style="width: 50%"
                       class="upload-demo"

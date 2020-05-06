@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="login-container">
     <div class="zq-from">
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-form"
@@ -29,15 +30,22 @@
           <el-button type="primary" @click="submitForm('ruleForm')" style="width: 85%">登录</el-button>
         </el-form-item>
       </el-form>
+      <div style="float: right; margin-right: 20px">
+        <el-button type="text">忘记密码</el-button>
+        <el-button type="text" @click="showRegister = true">注册</el-button>
+      </div>
     </div>
+  </div>
+  <register :show="this.showRegister" v-on:showRegis="showRegisChange"/>
   </div>
 </template>
 <script>
   import validCode from "@/components/commons/validCode.vue"
+  import Register from "./register";
 
   export default {
     name: 'index',
-    components: {validCode},
+    components: {Register, validCode},
     data() {
       var validateUesr = (rule, value, callback) => {
         if (!value) {
@@ -58,9 +66,12 @@
         }
       };
       var validateVCode = (rule, value, callback) => {
+        /*验证码忽略大小写*/
+        var upper = this.validCode.toUpperCase();
+        var s = value.toUpperCase();
         if (value === '' && this.isInVcode===true) {
           callback(new Error('请输入验证码'));
-        } else if (value !== this.validCode && this.isInVcode===true) {
+        } else if (s !== upper && this.isInVcode===true) {
           callback(new Error('验证码不正确'));
         } else {
           callback();
@@ -70,6 +81,9 @@
           bb:true,
           nameIsExit:true,
         isInVcode:true,
+
+        /*注册*/
+        showRegister:false,
         pass: '',
         validCode: '',
         ruleForm: {
@@ -127,9 +141,11 @@
             }).catch((res)=>{
                 this.$message.error("系统异常")
             });
-        }
+        },
 
-
+      showRegisChange(val){
+        this.showRegister =val;
+      }
     }
   }
 </script>
@@ -146,7 +162,7 @@
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 30px 50px 0;
+    padding: 20px 40px 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -155,7 +171,7 @@
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 120px 0px 0;
+    padding: 70px 0px 0;
     margin: 0 auto;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.1);

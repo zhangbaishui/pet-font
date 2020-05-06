@@ -1,4 +1,5 @@
 <template>
+  <!--Quan.Zhang: 这是自己写的一个验证码校验-->
   <div class="ValidCode disabled-select" :style="`width:${width}; height:${height}`" @click="refreshCode">
     <span v-for="(item, index) in codeList" :key="index" :style="getStyle(item)">{{item.code}}</span>
   </div>
