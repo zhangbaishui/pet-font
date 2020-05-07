@@ -31,7 +31,7 @@
         </el-form-item>
       </el-form>
       <div style="float: right; margin-right: 20px">
-        <el-button type="text">忘记密码</el-button>
+        <el-button type="text"  @click="forgetPass">忘记密码</el-button>
         <el-button type="text" @click="showRegister = true">注册</el-button>
       </div>
     </div>
@@ -42,10 +42,13 @@
 <script>
   import validCode from "@/components/commons/validCode.vue"
   import Register from "./register";
-
+  import Cookies  from  'js-cookie';
   export default {
     name: 'index',
     components: {Register, validCode},
+    created(){
+      Cookies.remove('user');
+    },
     data() {
       var validateUesr = (rule, value, callback) => {
         if (!value) {
@@ -92,6 +95,10 @@
           inVCode:'',
 
         },
+        userMessage:{
+          name:'',
+          mail:'',
+        },
         rules: {
           user: [
             {validator: validateUesr, trigger: 'blur'}
@@ -109,12 +116,10 @@
     methods: {
       shuaxin(){location.reload()},
       submitForm(formName) {
-
          console.log(this.ruleForm);
         this.$refs[formName].validate((valid) => {
           if (valid) {
                  this.nameIsExitMethod();
-
           } else {
             console.log('error submit!!');
             return false;
@@ -122,17 +127,19 @@
         });
       },
         nameIsExitMethod(){
-            this.$http.get('http://localhost:10012/api/pet/user/namePassIsTrue',{
+            this.$http.get('http://localhost:10010/api/pet/user/namePassIsTrue',{
                 params:{
                     name: this.ruleForm.user,
                     pass: this.ruleForm.pass
                 }
             },false).then((res)=>{
                 this.nameIsExit = res.data.ist;
-                console.log("dadda"+this.nameIsExit)
+              this.userMessage.name = res.data.name;
+              this.userMessage.mail = res.data.mail;
                 if (this.nameIsExit === true){
                     this.$message.success("登录成功")
-                    sessionStorage.setItem("user",this.ruleForm.user);
+                    // sessionStorage.setItem("user",this.ruleForm.user);
+                    Cookies.set('user',this.userMessage,{ expires: 3, path: ''});
                     this.$router.push({path:'/dashboard'})
                 }
                 else {
@@ -145,6 +152,25 @@
 
       showRegisChange(val){
         this.showRegister =val;
+      },
+      forgetPass(){
+        this.$prompt('请输入手机号', '找回密码', {
+          confirmButtonText: '下一步',
+          cancelButtonText: '取消',
+          inputPattern:/^1[3|4|5|8][0-9]\d{4,8}$/,
+          inputErrorMessage: '手机号格式不正确'
+        }).then(({ value }) => {
+          this.$alert('已经给您的\''+value +'\'号码发送短信，收到密码请重新登录', '短信已经发送', {
+            confirmButtonText: '确定',
+            callback: action => {
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
       }
     }
   }

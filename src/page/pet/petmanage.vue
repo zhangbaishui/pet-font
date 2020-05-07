@@ -12,7 +12,12 @@
           </div>
         </el-col>
       </el-row>
-      <div style="margin-top: 20px"><span>您的宠物:</span></div>
+      <div style="margin-top: 20px">
+        <span>您的宠物:</span>
+        <el-button size="small" style="float: right; margin-right: 2em;" type="success" @click="showAdd =true">添加宠物</el-button>
+        <add-pet :show="this.showAdd" v-on:showDailog="addpet"/>
+      </div>
+
       <el-row>
         <el-col :span="24" style="margin-top: 10px">
           <div class="grid-content bg-purple-dark">
@@ -57,11 +62,13 @@
   </el-card>
 </template>
 <script>
+    import AddPet from "./addpet";
     export default {
         name: 'petmanage',
-        components: {},
+        components: {AddPet},
         data() {
             return {
+              showAdd: false,
                 tableData: [{
                     id: '2016-05-02',
                     petName: '王小虎',
@@ -88,7 +95,10 @@
                     return 'success-row';
                 }
                 return '';
-            }
+            },
+          addpet(val){
+              this.showAdd =val;
+          }
         }
     }
 </script>

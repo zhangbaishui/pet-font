@@ -12,17 +12,18 @@
       </el-col>
       <el-col :span="10">
         <div class="grid-content bg-purple-light">
-          <div class="zq-float-text"><span>用户名:张泉aaaa</span>
-            <el-button style="margin-left: 20px" type="success" icon="el-icon-edit" @click="editName"
-                       circle></el-button>
+          <div class="zq-float-text"><span>用户名:{{this.name}}</span>
+              <el-button style="margin-left: 20px" type="success" icon="el-icon-edit" @click="editName" circle>
+              </el-button>
           </div>
         </div>
       </el-col>
       <el-col :span="10">
         <div class="grid-content bg-purple-light">
           <div class="zq-float-text">
-            <span>个人邮箱:2015781147@qq.com</span>
-            <el-button style="margin-left: 20px" type="success" icon="el-icon-edit" @click="open" circle></el-button>
+            <span>个人邮箱:{{this.mail}}</span>
+              <el-button style="margin-left: 20px" type="success" icon="el-icon-edit" @click="open" circle>
+              </el-button>
           </div>
         </div>
       </el-col>
@@ -71,7 +72,7 @@
         <el-col :span="23" style="margin-top: 18px">
           <div class="grid-content bg-purple-dark">
             <div class="demo-basic--circle" @click="petDetial">
-              <el-avatar :size="50" :src="circleUrl" ></el-avatar>
+              <el-avatar :size="50" :src="circleUrl"></el-avatar>
               <div style="margin-left: 8px;opacity: 0.8"><span>小绿</span></div>
             </div>
           </div>
@@ -81,64 +82,66 @@
   </el-card>
 </template>
 <script>
-    export default {
-        name: 'usermanage',
-        components: {},
-        data() {
-            return {
-                circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-                sizeList: ["large", "medium", "small"]
-            };
-        },
-        methods: {
-            errorHandler() {
-                return true
-            },
-            open() {
-                this.$prompt('请输入邮箱', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                    inputErrorMessage: '邮箱格式不正确',
-                    inputValue: "2313133"
-                }).then(({value}) => {
-                    this.$message({
-                        type: 'success',
-                        message: '你的邮箱是: ' + value
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消输入'
-                    });
-                });
-            },
-            editName() {
-                this.$prompt('请修改的名字', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    inputPlaceholder: "输入姓名",
-                    inputPattern: /\S/,
-                    inputErrorMessage: '名字不能为空',
-                    inputValue: "2313133"
-                }).then(({value}) => {
-                    this.$message({
-                        type: 'success',
-                        message: '你的名字是: ' + value
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '取消输入'
-                    });
-                });
-            },
-            petDetial(){
-                this.$router.push({path:'/petDetial',query:{id: "1213"}})
-            }
+  export default {
+    name: 'usermanage',
+    components: {},
+    data() {
+      return {
+        name:'泉哥你好帅',
+        mail:'2015781147@qq.com',
+        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        sizeList: ["large", "medium", "small"]
+      };
+    },
+    methods: {
+      errorHandler() {
+        return true
+      },
+      open() {
+        this.$prompt('请输入邮箱', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+          inputErrorMessage: '邮箱格式不正确',
+          inputValue: this.mail
+        }).then(({value}) => {
+          this.$message({
+            type: 'success',
+            message: '你的邮箱是: ' + value
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+      },
+      editName() {
+        this.$prompt('请修改的名字', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPlaceholder: "输入姓名",
+          inputPattern: /\S/,
+          inputErrorMessage: '名字不能为空',
+          inputValue: this.name
+        }).then(({value}) => {
+          this.$message({
+            type: 'success',
+            message: '你的名字是: ' + value
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+      },
+      petDetial() {
+        this.$router.push({path: '/petDetial', query: {id: "1213"}})
+      }
 
-        }
     }
+  }
 </script>
 <style scoped>
   .zq-float-text {

@@ -1,8 +1,8 @@
 <!--Quan.Zhang: 注册页面-->
 <template>
   <div>
-    <!--编辑宠物信息-->
-    <el-dialog title="用户注册" :visible.sync="dialogFormVisible" top="5vh">
+    <!--编辑用户信息-->
+    <el-dialog title="用户信息" :visible.sync="dialogFormVisible" top="5vh">
       <el-form :model="form" :rules="rules" ref="ruleForm">
         <el-form-item label="用户名称" :label-width="formLabelWidth" prop="name">
           <el-input style="width: 50%" v-model="form.name" autocomplete="off"></el-input>
@@ -124,21 +124,21 @@
           ],
           iphone: [
             {required: true, message: '请输入手机号', trigger: 'blur'},
-            {validator: isPhone}
+            {validator: isPhone, trigger: 'blur'}
           ],
           twopass: [
-            {validator: ispassTrue}
+            {validator: ispassTrue, trigger: 'blur'}
           ],
           gender: [
             { required: true, message: '请选择性别', trigger: 'change' }
             ],
           age: [
             {required: true, message: '请输入年龄', trigger: 'blur'},
-            {validator: isPercent}
+            {validator: isPercent, trigger: 'blur'}
           ],
           mail: [
             {required: true, message: '请输入邮箱', trigger: 'blur'},
-            {validator: isMail}
+            {validator: isMail, trigger: 'blur'}
           ],
 
 
@@ -156,6 +156,17 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.dialogFormVisible = false;
+            /*请求*/
+            let  user =  this.form;
+            this.$http.post('http://localhost:10010/api/pet/user/register',{
+              params:{
+                user: user
+              }
+            },false).then((res)=>{
+              this.$message.success(res.data.message)
+            }).catch((res)=>{
+              this.$message.error("系统异常")
+            });
           } else {
             return false;
           }

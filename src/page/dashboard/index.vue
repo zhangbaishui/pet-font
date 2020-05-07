@@ -14,14 +14,13 @@
           background-color="#283647"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="1">处理中心</el-menu-item>
-          <el-menu-item index="3" disabled>消息中心</el-menu-item>
-          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+          <el-menu-item index="1" >控制台</el-menu-item>
+          <el-menu-item index="3" disabled>管理员中心</el-menu-item>
           <el-submenu index="2">
             <template slot="title">个人信息</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-            <el-menu-item index="2-3" @click="tuichu">退出登录</el-menu-item>
+            <el-menu-item index="2-1">{{this.userMessage.name}}</el-menu-item>
+            <el-menu-item index="2-2">{{this.userMessage.mail}}</el-menu-item>
+            <el-menu-item index="2-4" @click="tuichu">退出登录</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -74,6 +73,7 @@
   import  Sidebar  from  "@/page/layout/Sidebar"
   import ElImageViewer from "element-ui/packages/image/src/image-viewer";
   import logo from '@/assets/img/danshengdog.png'
+  import Cookies  from  'js-cookie';
 export default {
   name: 'layout',
   components: {
@@ -82,16 +82,17 @@ export default {
       Sidebar,
       Appmain
   },
+  created(){
+    this.getUserMessage()
+  },
   data() {
     return {
       activeIndex2:'1',
       isCollapse: false,
+      userMessage:{},
       header_logo_img: logo,
       fullHeight: document.documentElement.clientHeight
     }
-  },
-  created(){
-
   },
   watch: {
     fullHeight (val) {//监控浏览器高度变化
@@ -110,6 +111,12 @@ export default {
     this.get_bodyHeight()
   },
   methods : {
+    getUserMessage(){
+      console.log(Cookies.get('user'));
+      if (Cookies.get('user') !==  undefined){
+        this.userMessage = JSON.parse(Cookies.get('user'));
+      }
+    },
       tuichu(){
           this.$message.success("成功退出登录");
           this.$router.push({path:'/login'})

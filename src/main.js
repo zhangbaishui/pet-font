@@ -9,12 +9,13 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';
 import echarts from  'echarts';
-import VueResource from 'vue-resource'
-Vue.use(VueResource)
+import VueResource from 'vue-resource';
+import Cookies  from  'js-cookie';
+Vue.use(VueResource);
 Vue.use(VueRouter);
-Vue.use(ElementUI)
-Vue.config.productionTip = false
-Vue.prototype.$echarts = echarts
+Vue.use(ElementUI);
+Vue.config.productionTip = false;
+Vue.prototype.$echarts = echarts;
 new Vue({
   el: '#app',
   // store,
@@ -22,14 +23,21 @@ new Vue({
   components: { App },
   template: '<App/>',
 })
+
+/*前端校验cookie*/
 router.beforeEach((to,from,next)=>{
-  console.log(sessionStorage.getItem('user'))
-  console.log(to.path)
+  // console.log(sessionStorage.getItem('user'))
+  // console.log(to.path)
   if(to.path === '/login'){
-    sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('user');
+    Cookies.remove('user')
   }
-  var user = sessionStorage.getItem('user');
-  if(!user && to.path !== '/login'){
+  // var user = sessionStorage.getItem('user');
+  var user ={};
+  if (Cookies.get('user') !== undefined) {
+     user  =  JSON.parse(Cookies.get('user'));
+  }
+  if(user.name === undefined  && to.path !== '/login'){
     next({
       path: '/login'
     })
