@@ -127,6 +127,7 @@
         });
       },
         nameIsExitMethod(){
+        /*quan.zhang； 账号密码是否真确*/
             this.$http.get('http://localhost:10010/api/pet/user/namePassIsTrue',{
                 params:{
                     name: this.ruleForm.user,
@@ -160,6 +161,14 @@
           inputPattern:/^1[3|4|5|8][0-9]\d{4,8}$/,
           inputErrorMessage: '手机号格式不正确'
         }).then(({ value }) => {
+          this.$http.get('http://localhost:10010/api/pet/user/namePassIsTrue',{
+            params:{
+              iphone: value,
+            }
+          },false).then((res)=>{
+          }).catch((res)=>{
+            this.$message.error("系统异常,稍后尝试")
+          });
           this.$alert('已经给您的\''+value +'\'号码发送短信，收到密码请重新登录', '短信已经发送', {
             confirmButtonText: '确定',
             callback: action => {

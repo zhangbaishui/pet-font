@@ -43,7 +43,7 @@
     <el-row>
       <el-col :span="1" style="margin-top: 10px"></el-col>
       <el-col :span="23" style="margin-top: 10px">
-        <div class="grid-content bg-purple-dark">您已经领养宠物达到了 20 天</div>
+        <div class="grid-content bg-purple-dark">本系统已经为您服务了 120 天</div>
       </el-col>
     </el-row>
     <el-row>
@@ -93,7 +93,14 @@
         sizeList: ["large", "medium", "small"]
       };
     },
+
+    created(){
+        this.getUserData()
+    },
     methods: {
+      getUserData(){
+        
+      },
       errorHandler() {
         return true
       },
