@@ -16,6 +16,7 @@ Vue.use(VueRouter);
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;
+Vue.http.options.emulateJSON = false;
 new Vue({
   el: '#app',
   // store,

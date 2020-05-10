@@ -11,24 +11,25 @@
           <el-input style="width: 50%" v-model="form.petAge" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="喜好" :label-width="formLabelWidth" prop="hobby">
-          <el-checkbox-group v-model="form.hobby">
-            <el-checkbox label="唱跳rap" name="type"></el-checkbox>
-            <el-checkbox label="游泳" name="type"></el-checkbox>
-            <el-checkbox label="爱吃" name="type"></el-checkbox>
-            <el-checkbox label="爱玩" name="type"></el-checkbox>
-          </el-checkbox-group>
+          <el-radio-group v-model="form.hobby">
+            <el-radio label="唱跳rap" name="type"></el-radio>
+            <el-radio label="游泳" name="type"></el-radio>
+            <el-radio label="爱吃" name="type"></el-radio>
+            <el-radio label="爱玩" name="type"></el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="宠物类型" :label-width="formLabelWidth" prop="type">
           <el-select style="width: 50%" v-model="form.type" placeholder="请选择宠物类型">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <div v-for="(type,index)  in  types">
+              <el-option :label="type.type_name" :value="type.type_id"></el-option>
+            </div>
           </el-select>
         </el-form-item>
         <el-form-item label="宠物状态" :label-width="formLabelWidth" prop="status">
-          <el-select style="width: 50%" v-model="form.satus" placeholder="请选择宠物状态">
-            <el-option label="健康" value="1"></el-option>
-            <el-option label="患病" value="2"></el-option>
-            <el-option label="死亡" value="3"></el-option>
+          <el-select style="width: 50%" v-model="form.status" placeholder="请选择宠物状态">
+            <el-option label="健康" value="健康"></el-option>
+            <el-option label="患病" value="患病"></el-option>
+            <el-option label="死亡" value="死亡"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="该宠物描述" :label-width="formLabelWidth" prop="desc">
@@ -64,6 +65,9 @@
         type: Boolean,
         default: false
       },
+        userId:{
+          type:String
+        }
     },
     components: {},
     watch: {
@@ -74,6 +78,9 @@
         this.$emit('showDailog', val);
       }
     },
+      created(){
+        this.queryAllType()
+      },
     data() {
 
       let percent = /^(?:[1-9]?\d|100)$/;
@@ -85,6 +92,7 @@
         }
       };
       return {
+          types:[],
         dialogFormVisible: false,
         formLabelWidth: '120px',
         twopass:'',
@@ -93,7 +101,7 @@
           petAge: '',
           type: '',
           status: '',
-          hobby: [],
+          hobby: '',
           image: [],
           desc: ''
         },
@@ -107,7 +115,7 @@
             {validator: isPercent}
           ],
           hobby: [
-            {type: 'array', required: true, message: '请至少选择一个喜好', trigger: 'change'}
+            {required: true, message: '请至少选择一个喜好', trigger: 'change'}
           ],
           type: [
             {required: true, message: '请选择宠物类型哦', trigger: 'change'}
@@ -122,6 +130,14 @@
       };
     },
     methods: {
+        queryAllType() {
+            this.$http.post('http://localhost:10010/api/pet/pet/queryAllType', {
+            }, {emulateJSON: true}).then((res) => {
+                this.types = res.data.types;
+            }).catch((res) => {
+                this.$message.error("获取类型异常")
+            });
+        },
       handleRemove(file,fileList) {
         console.log(file,fileList);
       },
@@ -131,18 +147,23 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.dialogFormVisible = false;
             /*请求*/
-            let  pet =  this.form;
-            this.$http.post('http://localhost:10010/api/pet/user/register',{
-              params:{
-                pet: pet
-              }
-            },false).then((res)=>{
-              this.$message.success(res.data.message)
-            }).catch((res)=>{
-              this.$message.error("系统异常")
-            });
+              this.dialogFormVisible = false;
+              this.$emit('shuaxin', Math.random());
+              this.$http.post('http://localhost:10010/api/pet/pet/add', {
+                  userId: this.userId,
+                  petName: this.form.petName,
+                  petAge: this.form.petAge,
+                  type: this.form.type,
+                  status: this.form.status,
+                  hobby: this.form.hobby,
+                  // image: this.image,
+                  desc: this.form.desc
+              }, {emulateJSON: true}).then((res) => {
+                  this.$message.success("添加成功")
+              }).catch((res) => {
+                  this.$message.error("添加宠物异常")
+              });
           } else {
             return false;
           }

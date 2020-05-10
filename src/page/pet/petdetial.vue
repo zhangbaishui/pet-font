@@ -26,24 +26,25 @@
                     <el-input style="width: 50%" v-model="form.petAge" autocomplete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="喜好" :label-width="formLabelWidth" prop="hobby">
-                    <el-checkbox-group v-model="form.hobby">
-                      <el-checkbox label="唱跳rap" name="type"></el-checkbox>
-                      <el-checkbox label="游泳" name="type"></el-checkbox>
-                      <el-checkbox label="爱吃" name="type"></el-checkbox>
-                      <el-checkbox label="爱玩" name="type"></el-checkbox>
-                    </el-checkbox-group>
+                    <el-radio-group v-model="form.hobby">
+                      <el-radio label="唱跳rap" name="type"></el-radio>
+                      <el-radio label="游泳" name="type"></el-radio>
+                      <el-radio label="爱吃" name="type"></el-radio>
+                      <el-radio label="爱玩" name="type"></el-radio>
+                    </el-radio-group>
                   </el-form-item>
                   <el-form-item label="宠物类型" :label-width="formLabelWidth" prop="type">
                     <el-select style="width: 50%" v-model="form.type" placeholder="请选择宠物类型">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <div v-for="(type,index)  in  types">
+                        <el-option :label="type.type_name" :value="type.type_id"></el-option>
+                      </div>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="宠物状态" :label-width="formLabelWidth" prop="status">
-                    <el-select style="width: 50%" v-model="form.satus" placeholder="请选择宠物状态">
-                      <el-option label="健康" value="1"></el-option>
-                      <el-option label="患病" value="2"></el-option>
-                      <el-option label="死亡" value="3"></el-option>
+                    <el-select style="width: 50%" v-model="form.status" placeholder="请选择宠物状态">
+                      <el-option label="健康" value="健康"></el-option>
+                      <el-option label="患病" value="患病"></el-option>
+                      <el-option label="死亡" value="死亡"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="该宠物描述" :label-width="formLabelWidth" prop="desc">
@@ -63,9 +64,9 @@
                     </el-upload>
                   </el-form-item>
                   <el-form-item style="margin-left: 70%">
-                      <el-button @click="resetForm('ruleForm')">取 消</el-button>
-                      <el-button type="primary" @click="submitForm('ruleForm')">确 定
-                      </el-button>
+                    <el-button @click="resetForm('ruleForm')">取 消</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">确 定
+                    </el-button>
                   </el-form-item>
                 </el-form>
               </el-dialog>
@@ -77,12 +78,12 @@
               </el-avatar>
             </div>
             <div style="text-align: center; margin-top: 5px">
-              <span>小黑</span>
+              <span>{{this.pet.pet_name}}</span>
             </div>
             <div style="  margin-top: 35px">
               <span>describtion:  </span>
               <el-divider></el-divider>
-              <span>这是一条好狗，非常乖哦，肉很好吃！</span>
+              <span>{{this.pet.pet_desc}}</span>
             </div>
             <div style="margin-top: 60px;">
               <div style="margin-top: 5px;font-size: 13px">
@@ -110,18 +111,20 @@
               <el-col :span="6">
                 <div class="grid-content bg-purple-dark">
                   <div style="margin-left: 20px"><span style="color: #67C23A"><i class="el-icon-star-on"/>宠物名:</span>
-                    <span style="margin-left: 40px">小黑</span></div>
+                    <span style="margin-left: 40px">{{this.pet.pet_name}}</span></div>
 
                   <div style="margin-left: 20px;margin-top: 3em"><span style="color: #67C23A;font-size: 20px">
-                    <i class="el-icon-star-on"/>宠物类型:</span> <span style="margin-left: 40px">小黑</span>
+                    <i class="el-icon-star-on"/>宠物类型:</span> <span style="margin-left: 40px">{{this.petType()}}</span>
                   </div>
 
                   <div style="margin-left: 20px;margin-top: 3em"><span style="color: #67C23A;">
-                    <i class="el-icon-star-on"/>宠物年龄:</span> <span style="margin-left: 40px">小黑</span>
+                    <i class="el-icon-star-on"/>宠物年龄:</span> <span
+                    style="margin-left: 40px">{{this.pet.pet_age}} 岁</span>
                   </div>
 
                   <div style="margin-left: 20px;margin-top: 3em"><span style="color: #67C23A;font-size: 20px">
-                    <i class="el-icon-star-on"/>状态:</span> <span style="margin-left: 40px">健康</span>
+                    <i class="el-icon-star-on"/>状态:</span> <span
+                    style="margin-left: 40px">{{this.pet.pet_status}}</span>
                   </div>
                   <!--照片组-->
                   <!--                  <div class="demo-image__preview">-->
@@ -132,7 +135,7 @@
                   <!--                    </el-image>-->
                   <!--                  </div>-->
                   <div style="margin-left: 20px;margin-top: 3em"><span style="color: #67C23A;font-size: 20px">
-                    <i class="el-icon-star-on"/>喜好:</span> <span style="margin-left: 40px">健康</span>
+                    <i class="el-icon-star-on"/>喜好:</span> <span style="margin-left: 40px">{{this.pet.hobby}}</span>
                   </div>
                 </div>
               </el-col>
@@ -163,6 +166,10 @@
     export default {
         name: 'petdatial',
         components: {},
+        created() {
+            this.getPetData(this.$route.query.id);
+            this.queryAllType()
+        },
         data() {
 
             let percent = /^(?:[1-9]?\d|100)$/;
@@ -174,8 +181,8 @@
                 }
             };
             return {
-
-
+                types:[],
+                pet: {},
                 dialogFormVisible: false,
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 urls: [
@@ -201,7 +208,7 @@
                     petAge: '',
                     type: '',
                     status: '',
-                    hobby: [],
+                    hobby: '',
                     image: [],
                     desc: ''
                 },
@@ -215,7 +222,7 @@
                         {validator: isPercent}
                     ],
                     hobby: [
-                        {type: 'array', required: true, message: '请至少选择一个喜好', trigger: 'change'}
+                        {required: true, message: '请至少选择一个喜好', trigger: 'change'}
                     ],
                     type: [
                         {required: true, message: '请选择宠物类型哦', trigger: 'change'}
@@ -230,8 +237,40 @@
             };
         },
         methods: {
+            queryAllType(id) {
+                    this.$http.post('http://localhost:10010/api/pet/pet/queryAllType', {
+                    }, {emulateJSON: true}).then((res) => {
+                        this.types = res.data.types;
+                    }).catch((res) => {
+                        this.$message.error("获取类型异常")
+                    });
+            },
+            getPetData(id) {
+                this.$http.post('http://localhost:10010/api/pet/pet/getPetById', {
+                    id: id
+                }, {emulateJSON: true}).then((res) => {
+                    this.pet = res.data.pet;
+                    this.form.petName = this.pet.pet_name;
+                    this.form.hobby = this.pet.hobby;
+                    this.form.petAge = this.pet.pet_age;
+                    this.form.desc = this.pet.pet_desc;
+                    this.form.status = this.pet.pet_status;
+                    this.form.type = this.pet.type
+
+
+                }).catch((res) => {
+                    this.$message.error("系统异常")
+                });
+            },
+            petType(){
+                for (let i = 0; i< this.types.length;i++){
+                    if (this.pet.type === this.types[i].type_id){
+                        return this.types[i].type_name;
+                    }
+                }
+            },
             goBack() {
-                console.log('go back');
+                this.$router.push({path: '/'+this.$route.query.path})
             },
             /*随机整数*/
             getRandomInt(min, max) {
@@ -247,6 +286,20 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.dialogFormVisible = false;
+                        this.$http.post('http://localhost:10010/api/pet/pet/update', {
+                            id:this.$route.query.id,
+                            petName: this.form.petName,
+                            petAge: this.form.petAge,
+                            type: this.form.type,
+                            status: this.form.status,
+                            hobby: this.form.hobby,
+                            // image: this.image,
+                            desc: this.form.desc
+                        }, {emulateJSON: true}).then((res) => {
+                            this.getPetData(this.$route.query.id)
+                        }).catch((res) => {
+                            this.$message.error("修改宠物信息异常")
+                        });
                     } else {
                         return false;
                     }

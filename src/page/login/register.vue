@@ -157,12 +157,17 @@
           if (valid) {
             this.dialogFormVisible = false;
             /*请求*/
-            let  user =  this.form;
+
+            let  user =  this.form
             this.$http.post('http://localhost:10010/api/pet/user/register',{
-              params:{
-                user: user
-              }
-            },false).then((res)=>{
+                name: user.name,
+                pass: user.pass,
+                gender: user.gender,
+                iphone: user.iphone,
+                mail: user.mail,
+                age: user.age,
+                image: JSON.stringify(user.image),
+            },{emulateJSON:true}).then((res)=>{
               this.$message.success(res.data.message)
             }).catch((res)=>{
               this.$message.error("系统异常")

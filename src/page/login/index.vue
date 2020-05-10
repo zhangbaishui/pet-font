@@ -161,19 +161,27 @@
           inputPattern:/^1[3|4|5|8][0-9]\d{4,8}$/,
           inputErrorMessage: '手机号格式不正确'
         }).then(({ value }) => {
-          this.$http.get('http://localhost:10010/api/pet/user/namePassIsTrue',{
-            params:{
+          this.$http.post('http://localhost:10010/api/pet/user/callback',{
               iphone: value,
-            }
-          },false).then((res)=>{
+          },{emulateJSON:true}).then((res)=>{
+
+              if (res.data.msg !== null  &&  res.data.msg !== undefined){
+              this.$alert('已经给您的\''+value +'\'号码发送短信，收到密码请重新登录', '短信已经发送', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                  }
+              });
+              }else {
+                  this.$alert('该手机号码不存在，请重新输入', {
+                      confirmButtonText: '确定',
+                      callback: action => {
+                      }
+                  });
+              }
           }).catch((res)=>{
             this.$message.error("系统异常,稍后尝试")
           });
-          this.$alert('已经给您的\''+value +'\'号码发送短信，收到密码请重新登录', '短信已经发送', {
-            confirmButtonText: '确定',
-            callback: action => {
-            }
-          });
+
         }).catch(() => {
           this.$message({
             type: 'info',
