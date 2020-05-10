@@ -142,6 +142,7 @@
                 }
 
             },
+
             getUserData(name,mail) {
                 this.$http.post('http://localhost:10010/api/pet/user/getId', {
                     name: name,
