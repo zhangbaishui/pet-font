@@ -121,7 +121,7 @@
                         this.name = res.data.name,
                         this.mail = res.data.mail,
                        this.gender = res.data.gender,
-                          this.image = res.data,
+                       this.image = res.data.image,
                        this.createTime  = new Date(res.data.createTime);
                         this.pets  =  res.data.pets;
                     }).catch((res) => {

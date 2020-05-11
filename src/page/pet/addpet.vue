@@ -39,9 +39,9 @@
           <el-upload
             style="width: 50%"
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
+            action="http://localhost:10010/api/pet/user/uploadFile"
+            accept="image/jpeg,image/jpg,image/png"
+            :on-change="handleChange"
             :file-list="form.image"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
@@ -130,6 +130,9 @@
       };
     },
     methods: {
+        handleChange(file,fileList) {
+            this.form.image = fileList;
+        },
         queryAllType() {
             this.$http.post('http://localhost:10010/api/pet/pet/queryAllType', {
             }, {emulateJSON: true}).then((res) => {
@@ -138,16 +141,18 @@
                 this.$message.error("获取类型异常")
             });
         },
-      handleRemove(file,fileList) {
-        console.log(file,fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             /*请求*/
+              let images =[];
+              console.log("daa");
+              console.log(this.form.image);
+              if(this.form.image.length !==0){
+                  this.form.image.forEach(im=>{
+                      images.push(im.response)
+                  })
+              }
               this.dialogFormVisible = false;
               this.$emit('shuaxin', Math.random());
               this.$http.post('http://localhost:10010/api/pet/pet/add', {
@@ -157,9 +162,9 @@
                   type: this.form.type,
                   status: this.form.status,
                   hobby: this.form.hobby,
-                  // image: this.image,
+                  image: images.toString(),
                   desc: this.form.desc
-              }, {emulateJSON: true}).then((res) => {
+                }, {emulateJSON: true}).then((res) => {
                   this.$message.success("添加成功")
               }).catch((res) => {
                   this.$message.error("添加宠物异常")

@@ -32,7 +32,7 @@
           <el-upload
             style="width: 50%"
             class="upload-demo"
-            action="#"
+            action="http://localhost:10010/api/pet/user/uploadFile"
             accept="image/jpeg,image/jpg,image/png"
             :on-change="handleChange"
             :file-list="form.image"
@@ -103,6 +103,12 @@
         }
       };
       return {
+        ossData:{
+            accessKeyId: 'LTAI4Fe95ZULzQFxdPi62sKn',
+            accessKeySecret: 'wcfDs9JvM0KpCzjNnmvQnA4ODK95gf',
+            bucket: 'baishui-1',
+            region: 'oss-cn-hangzhou'
+        },
         dialogFormVisible: false,
         formLabelWidth: '120px',
         twopass:'',
@@ -176,11 +182,13 @@
             /*请求*/
 
             let  user =  this.form;
-            let  image = [];
-            //判断是否有文件
-            if(user.image.length !== 0){
-              fd.append("file" , this.fileList[0].raw);
+            let  url  = null;
+              //判断是否有文件
+              console.log(this.form.image)
+            if(this.form.image.length!==0){
+                url = this.form.image[0].response
             }
+            let  image = [];
             this.$http.post('http://localhost:10010/api/pet/user/register',{
                 name: user.name,
                 pass: user.pass,
@@ -188,8 +196,9 @@
                 iphone: user.iphone,
                 mail: user.mail,
                 age: user.age,
-                image: this.form.image[0].raw,
-            },{emulateJSON:true}).then((res)=>{
+                image: url,
+            },{emulateJSON:true,processData: false, //因为data值是FormData对象，不需要对数据做处理。
+                contentType: false,}).then((res)=>{
               this.$message.success(res.data.message)
             }).catch((res)=>{
               this.$message.error("系统异常")
