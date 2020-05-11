@@ -3,7 +3,7 @@
   <div>
     <el-row :gutter="25" style="margin-top: 0">
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <transition name="el-fade-in-linear">
+        <transition name="el-zoom-in-center">
         <el-card class="zq-card1-1 animated" v-show="show1" >
           <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>宠物总量</span></div>
           <el-row type="flex"justify="center">
@@ -15,7 +15,7 @@
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple">
-        <transition name="el-fade-in-linear">
+        <transition name="el-zoom-in-center">
         <el-card class="zq-card1-2" v-show="show1">
           <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>线下店铺</span></div>
           <el-row type="flex"justify="center">
@@ -27,7 +27,7 @@
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <transition name="el-fade-in-linear">
+        <transition name="el-zoom-in-center">
         <el-card class="zq-card1-3" v-show="show1">
           <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>注册人数</span></div>
           <el-row type="flex"justify="center">
@@ -39,7 +39,7 @@
         </transition>
       </div></el-col>
       <el-col :span="5"><div class="grid-content bg-purple-light">
-        <transition name="el-fade-in-linear">
+        <transition name="el-zoom-in-center">
         <el-card class="zq-card1-4" v-show="show1">
           <div style="color: #ffffff; margin-top: 8px;margin-left: 8px;opacity:0.9"><span>在线人数</span></div>
           <el-row type="flex"justify="center">
@@ -132,7 +132,7 @@
         /*quan zhang: 延迟执行  */
           setTimeout(()=>{   //设置延迟执行
              this.show1 = true;
-          },800)
+          },500)
       }
 
   }

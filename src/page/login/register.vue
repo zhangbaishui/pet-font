@@ -32,9 +32,9 @@
           <el-upload
             style="width: 50%"
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
+            action="#"
+            accept="image/jpeg,image/jpg,image/png"
+            :on-change="handleChange"
             :file-list="form.image"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
@@ -146,11 +146,28 @@
       };
     },
     methods: {
-      handleRemove(file,fileList) {
-        console.log(file,fileList);
+      handleChange(file,fileList) {
+        let bo = this.beforeAvatarUpload(file);
+        if(!bo){
+          //图片不符合规范
+          this.form.image = [];     //图片列表赋值为空
+          return;
+        }
+        //如果图片符合 规范，将之前的图片剪切，覆盖掉
+        this.form.image = fileList.slice(-1);
       },
-      handlePreview(file) {
-        console.log(file);
+      //图片判断，大小
+      beforeAvatarUpload(file) {
+        // const isJPG = file.raw.type == 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        // return isJPG && isLt2M;
+        return isLt2M;
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -158,7 +175,12 @@
             this.dialogFormVisible = false;
             /*请求*/
 
-            let  user =  this.form
+            let  user =  this.form;
+            let  image = [];
+            //判断是否有文件
+            if(user.image.length !== 0){
+              fd.append("file" , this.fileList[0].raw);
+            }
             this.$http.post('http://localhost:10010/api/pet/user/register',{
                 name: user.name,
                 pass: user.pass,
@@ -166,7 +188,7 @@
                 iphone: user.iphone,
                 mail: user.mail,
                 age: user.age,
-                image: JSON.stringify(user.image),
+                image: this.form.image[0].raw,
             },{emulateJSON:true}).then((res)=>{
               this.$message.success(res.data.message)
             }).catch((res)=>{

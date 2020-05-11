@@ -5,7 +5,7 @@
         <div class="grid-content bg-purple">
           <div class="demo-type">
             <el-avatar :size="100" src="" @error="errorHandler">
-              <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+              <img :src="image"/>
             </el-avatar>
           </div>
         </div>
@@ -91,6 +91,7 @@
                 id: '',
                 name: '',
                 mail: '',
+                image:'',
                 gender:'',
                 createTime :'',
                 circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -111,7 +112,7 @@
                 }
                 this.getUserData(this.name,this.mail)
             },
-            getUserData(name,mail) {
+            async getUserData(name,mail) {
                     this.$http.post('http://localhost:10010/api/pet/user/getUser', {
                         name: name,
                         mail: mail,
@@ -120,6 +121,7 @@
                         this.name = res.data.name,
                         this.mail = res.data.mail,
                        this.gender = res.data.gender,
+                          this.image = res.data,
                        this.createTime  = new Date(res.data.createTime);
                         this.pets  =  res.data.pets;
                     }).catch((res) => {
