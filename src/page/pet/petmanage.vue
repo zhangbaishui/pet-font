@@ -15,7 +15,7 @@
       <div style="margin-top: 20px">
         <span>您的宠物:</span>
         <el-button size="small" style="float: right; margin-right: 2em;" type="success" @click="addpet()">添加宠物</el-button>
-        <add-pet :show="this.showAdd"  :userId="this.userId" v-on:showDailog="addpet"  v-on:shuaxin="shuaxin"/>
+        <add-pet :show="this.showAdd"  :userId="this.userId"   v-on:shuaxin="shuaxin"/>
       </div>
 
       <el-row>
@@ -134,10 +134,9 @@
                     this.$message.error("获取类型异常")
                 });
             },
-            getCookie(){
+              getCookie(){
                 if (Cookies.get('user') !== undefined) {
                     let user = JSON.parse(Cookies.get('user'));
-
                     this.getUserData(user.name,user.mail)
                 }
 
@@ -164,10 +163,13 @@
             queryPet(id){
                 this.$router.push({path: '/petDetial', query: {id: id,path:'pet'}})
             },
-          addpet(val){
+          addpet(){
               this.showAdd =true;
           },
-            shuaxin(){
+            shuaxin(val){
+                console.log(val)
+                this.showAdd = false;
+                console.log(this.showAdd)
                 this.getCookie()
             }
         }

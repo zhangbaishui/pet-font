@@ -2,7 +2,7 @@
 <template>
   <div>
     <!--编辑宠物信息-->
-    <el-dialog title="编辑宠物" :visible.sync="dialogFormVisible">
+    <el-dialog title="编辑宠物" :visible.sync="dialogFormVisible" @close='closeDialog'>
       <el-form :model="form" :rules="rules" ref="ruleForm">
         <el-form-item label="宠物名称" :label-width="formLabelWidth" prop="petName">
           <el-input style="width: 50%" v-model="form.petName" autocomplete="off"></el-input>
@@ -42,6 +42,8 @@
             action="http://localhost:10010/api/pet/user/uploadFile"
             accept="image/jpeg,image/jpg,image/png"
             :on-change="handleChange"
+            :on-remove="removeChange"
+            :on-success="UploadSuccess"
             :file-list="form.image"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
@@ -62,8 +64,7 @@
     name: 'addPet',
     props: {
       show: {
-        type: Boolean,
-        default: false
+        type: Boolean
       },
         userId:{
           type:String
@@ -73,10 +74,8 @@
     watch: {
       show(val) {
         this.dialogFormVisible = val;
+        console.log(this.dialogFormVisible)
       },
-      dialogFormVisible(val) {
-        this.$emit('showDailog', val);
-      }
     },
       created(){
         this.queryAllType()
@@ -131,7 +130,17 @@
     },
     methods: {
         handleChange(file,fileList) {
+            console.log(fileList)
             this.form.image = fileList;
+        },
+        removeChange(file,fileList) {
+            this.form.image = fileList;
+        },
+        //上传成功之后添加到原有的list集合中
+        UploadSuccess (response, file, fileList) {
+            console.log('商品详情图上传成功', response)
+            console.log(file)
+            console.log(fileList)
         },
         queryAllType() {
             this.$http.post('http://localhost:10010/api/pet/pet/queryAllType', {
@@ -176,9 +185,16 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+
         this.dialogFormVisible = false;
+          this.$emit('shuaxin', Math.random());
         this.$message("已取消编辑")
-      }
+      },
+
+        closeDialog(){
+            this.dialogFormVisible = false;
+            this.$emit('shuaxin', Math.random());
+        }
 
     }
   }

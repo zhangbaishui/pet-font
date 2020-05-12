@@ -54,9 +54,11 @@
                     <el-upload
                       style="width: 50%"
                       class="upload-demo"
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      :on-preview="handlePreview"
-                      :on-remove="handleRemove"
+                      action="http://localhost:10010/api/pet/user/uploadFile"
+                      accept="image/jpeg,image/jpg,image/png"
+                      :on-change="handleChange"
+                      :on-remove="removeChange"
+                      :on-success="UploadSuccess"
                       :file-list="form.image"
                       list-type="picture">
                       <el-button size="small" type="primary">点击上传</el-button>
@@ -73,8 +75,8 @@
 
             </div>
             <div style="text-align: center; margin-top: 2em">
-              <el-avatar :size="100" icon="el-icon-user-solid">
-                <!--                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>-->
+              <el-avatar :size="100" >
+                                  <img :src="images[0]"/>
               </el-avatar>
             </div>
             <div style="text-align: center; margin-top: 5px">
@@ -145,7 +147,8 @@
                     <span>照片墙:</span>
                   </div>
                   <div class="demo-image__lazy">
-                    <el-image v-for="url in urls" :key="url" :src="url"></el-image>
+<!--                    <el-image v-for="url in urls" :key="url" :src="url"  style="width: 100%"></el-image>-->
+                    <el-image v-for="url in images" :key="url" :src="url" style="width: 100%"></el-image>
                   </div>
 
                   <div style="margin-top: 2em; font-size: 20px;opacity: 0.7; margin-bottom: 20px">
@@ -170,6 +173,9 @@
             this.getPetData(this.$route.query.id);
             this.queryAllType()
         },
+        watch:{
+
+        },
         data() {
 
             let percent = /^(?:[1-9]?\d|100)$/;
@@ -183,6 +189,7 @@
             return {
                 types:[],
                 pet: {},
+                images: [],
                 dialogFormVisible: false,
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 urls: [
@@ -237,6 +244,17 @@
             };
         },
         methods: {
+            handleChange(file,fileList) {
+                this.form.image = fileList;
+            },
+            removeChange(file,fileList) {
+                this.form.image = fileList;
+            },
+            UploadSuccess (response, file, fileList) {
+                console.log('商品详情图上传成功', response)
+                console.log(file)
+                console.log(fileList)
+            },
             queryAllType(id) {
                     this.$http.post('http://localhost:10010/api/pet/pet/queryAllType', {
                     }, {emulateJSON: true}).then((res) => {
@@ -250,16 +268,36 @@
                     id: id
                 }, {emulateJSON: true}).then((res) => {
                     this.pet = res.data.pet;
+                    let  s = res.data.pet.image;
+                    this.images = s.substring(1,s.length-1).split(",");
+                    console.log(this.images);
                     this.form.petName = this.pet.pet_name;
                     this.form.hobby = this.pet.hobby;
                     this.form.petAge = this.pet.pet_age;
                     this.form.desc = this.pet.pet_desc;
                     this.form.status = this.pet.pet_status;
                     this.form.type = this.pet.type
+                    //数据回填
+                    this.form.image = [];
+                    for(let i= 0;i<this.images.length;i++){
+                        // this.form.image[i]["uid"] =i;
+                        // this.form.image[i]["status"] = "success";
+                        // this.form.image[i]["url"] = this.images[i];
+                        var obj = {}
+                        let index = this.images[i].lastIndexOf('\/');
+                        let fileName  = this.images[i].substring(index + 1, this.images[i].length);
+                        this.$set(obj,'name',fileName);
+                        this.$set(obj,'url',this.images[i]);
+                        this.$set(obj,'response',this.images[i]);
+                        this.form.image.push(obj)
+                    }
+                    console.log("dada");
+                    console.log(this.form.image)
 
 
                 }).catch((res) => {
-                    this.$message.error("系统异常")
+                    console.log(res)
+                    this.$message.error("系统异常了呀")
                 });
             },
             petType(){
@@ -285,6 +323,12 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        let images =[];
+                        if(this.form.image.length !==0){
+                            this.form.image.forEach(im=>{
+                                images.push(im.response)
+                            })
+                        }
                         this.dialogFormVisible = false;
                         this.$http.post('http://localhost:10010/api/pet/pet/update', {
                             id:this.$route.query.id,
@@ -293,9 +337,10 @@
                             type: this.form.type,
                             status: this.form.status,
                             hobby: this.form.hobby,
-                            // image: this.image,
+                            image: images.toString(),
                             desc: this.form.desc
                         }, {emulateJSON: true}).then((res) => {
+                            this.$message.success("修改成功")
                             this.getPetData(this.$route.query.id)
                         }).catch((res) => {
                             this.$message.error("修改宠物信息异常")

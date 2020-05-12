@@ -4,7 +4,7 @@
       <el-col :span="2">
         <div class="grid-content bg-purple">
           <div class="demo-type">
-            <el-avatar :size="100" src="" @error="errorHandler">
+            <el-avatar :size="100"  @error="errorHandler">
               <img :src="image"/>
             </el-avatar>
           </div>
@@ -72,7 +72,13 @@
         <el-col :span="23" style="margin-top: 18px">
           <div class="grid-content bg-purple-dark">
             <div class="demo-basic--circle" @click="petDetial(pet.id)">
-              <el-avatar :size="50" :src="circleUrl"></el-avatar>
+              <el-avatar :size="50" >
+                 <img :src="pet.image.substring(1,pet.image.length-1).split(',')[0]"/>
+
+<!--                let  s = pet.image;-->
+<!--                this.images = pet.image.substring(1,pet.image.length-1).split(",");-->
+
+              </el-avatar>
               <div style="margin-left: 8px;opacity: 0.8"><span>{{pet.pet_name}}</span></div>
             </div>
           </div>
@@ -123,6 +129,7 @@
                        this.gender = res.data.gender,
                        this.image = res.data.image,
                        this.createTime  = new Date(res.data.createTime);
+                        //将pet所有数据全都返回过来，包括image
                         this.pets  =  res.data.pets;
                     }).catch((res) => {
                         this.$message.error("请求用户信息异常")
