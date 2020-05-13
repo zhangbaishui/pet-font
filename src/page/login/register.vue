@@ -203,6 +203,7 @@
             }).catch((res)=>{
               this.$message.error("系统异常")
             });
+            this.form = {name: '', pass: '', gender: '', iphone: '', mail: '', age: '', image: [],};
           } else {
             return false;
           }

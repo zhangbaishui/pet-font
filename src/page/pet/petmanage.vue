@@ -4,9 +4,10 @@
       <el-row >
         <el-col :span="24" style="margin-top: 10px">
           <div class="grid-content bg-purple-dark">
-            <el-carousel height="350px">
-              <el-carousel-item v-for="item in 4" :key="item">
-                <h3 class="small">{{ item }}</h3>
+            <el-carousel height="350px" >
+              <el-carousel-item v-for="item in carousels" :key="item">
+<!--                <h3 class="small">{{ item }}</h3>-->
+                <img :src="item" style="width: 100%;height: 100%"/>
               </el-carousel-item>
             </el-carousel>
           </div>
@@ -79,6 +80,14 @@
 <script>
     import AddPet from "./addpet";
     import Cookies  from  'js-cookie';
+    // import img1 from "@/assets/img/carousel-5.png";
+    // import img2 from "@/assets/img/carousel-3.png";
+    // import img3 from "@/assets/img/carousel-4.png";
+    // import img4 from "@/assets/img/carousel-1.png";
+    import img1 from "@/assets/img/changtu1.png";
+    import img2 from "@/assets/img/changtu2.png";
+    import img3 from "@/assets/img/changtu3.png";
+    import img4 from "@/assets/img/changtu4.png";
     export default {
         name: 'petmanage',
         components: {AddPet},
@@ -92,6 +101,7 @@
                 types:[],
                 userId:'',
                 pets:[],
+                carousels:[img1,img2,img3,img4],
                 loading:true,
               showAdd: false,
             };
